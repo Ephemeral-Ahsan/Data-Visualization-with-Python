@@ -1,0 +1,790 @@
+
+
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+%matplotlib inline
+
+
+# Notice this we also include the special command `%matplotlib inline` to ensure that our plots are shown and embedded within the Jupyter notebook itself. Without this command, sometimes plots may show up in pop-up windows.
+
+# ## Line Chart
+ 
+# The line chart is one of the simplest and most widely used data visualization techniques. A line chart displays information as a series of data points or markers connected by straight lines. You can customize the shape, size, color, and other aesthetic elements of the lines and markers for better visual clarity.
+# 
+# Here's a Python list showing the yield of apples (tons per hectare) over six years in an imaginary country called Kanto.
+
+# In[3]:
+
+
+yield_apples = [0.895, 0.91, 0.919, 0.926, 0.929, 0.931]
+
+
+# We can visualize how the yield of apples changes over time using a line chart. To draw a line chart, we can use the `plt.plot` function.
+
+# In[4]:
+
+
+plt.plot(yield_apples)
+
+
+# Calling the `plt.plot` function draws the line chart as expected. It also returns a list of plots drawn `[<matplotlib.lines.Line2D at 0x7ff70aa20760>]`, shown within the output. We can include a semicolon (`;`) at the end of the last statement in the cell to avoiding showing the output and display just the graph.
+
+# In[5]:
+
+
+plt.plot(yield_apples);
+
+
+# Let's enhance this plot step-by-step to make it more informative and beautiful.
+
+# ### Customizing the X-axis
+# 
+# The X-axis of the plot currently shows list element indexes 0 to 5. The plot would be more informative if we could display the year for which we're plotting the data. We can do this by two arguments `plt.plot`.
+
+# In[6]:
+
+
+years = [2010, 2011, 2012, 2013, 2014, 2015]
+yield_apples = [0.895, 0.91, 0.919, 0.926, 0.929, 0.931]
+
+
+# In[7]:
+
+
+plt.plot(years, yield_apples)
+
+
+# ### Axis Labels
+# 
+# We can add labels to the axes to show what each axis represents using the `plt.xlabel` and `plt.ylabel` methods.
+
+# In[8]:
+
+
+plt.plot(years, yield_apples)
+plt.xlabel('Year')
+plt.ylabel('Yield (tons per hectare)');
+
+
+# ### Plotting Multiple Lines
+# 
+# You can invoke the `plt.plot` function once for each line to plot multiple lines in the same graph. Let's compare the yields of apples vs. oranges in Kanto.
+
+# In[9]:
+
+
+years = range(2000, 2012)
+apples = [0.895, 0.91, 0.919, 0.926, 0.929, 0.931, 0.934, 0.936, 0.937, 0.9375, 0.9372, 0.939]
+oranges = [0.962, 0.941, 0.930, 0.923, 0.918, 0.908, 0.907, 0.904, 0.901, 0.898, 0.9, 0.896, ]
+
+
+# In[10]:
+
+
+plt.plot(years, apples)
+plt.plot(years, oranges)
+plt.xlabel('Year')
+plt.ylabel('Yield (tons per hectare)');
+
+
+# ### Chart Title and  Legend
+# 
+# To differentiate between multiple lines, we can include a legend within the graph using the `plt.legend` function. We can also set a title for the chart using the `plt.title` function.
+
+# In[11]:
+
+
+plt.plot(years, apples)
+plt.plot(years, oranges)
+
+plt.xlabel('Year')
+plt.ylabel('Yield (tons per hectare)')
+
+plt.title("Crop Yields in Kanto")
+plt.legend(['Apples', 'Oranges']);
+
+
+# ### Line Markers
+# 
+# We can also show markers for the data points on each line using the `marker` argument of `plt.plot`. Matplotlib provides many different markers, like a circle, cross, square, diamond, etc. You can find the full list of marker types here: https://matplotlib.org/3.1.1/api/markers_api.html .
+
+# In[12]:
+
+
+plt.plot(years, apples, marker='o')
+plt.plot(years, oranges, marker='x')
+
+plt.xlabel('Year')
+plt.ylabel('Yield (tons per hectare)')
+
+plt.title("Crop Yields in Kanto")
+plt.legend(['Apples', 'Oranges']);
+
+
+# ### Styling Lines and Markers
+# 
+# The `plt.plot` function supports many arguments for styling lines and markers:
+# 
+# - `color` or `c`: Set the color of the line ([supported colors](https://matplotlib.org/3.1.0/gallery/color/named_colors.html))
+# - `linestyle` or `ls`: Choose between a solid or dashed line
+# - `linewidth` or `lw`: Set the width of a line
+# - `markersize` or `ms`: Set the size of markers
+# - `markeredgecolor` or `mec`: Set the edge color for markers
+# - `markeredgewidth` or `mew`: Set the edge width for markers
+# - `markerfacecolor` or `mfc`: Set the fill color for markers
+# - `alpha`: Opacity of the plot
+# 
+# 
+# Check out the documentation for `plt.plot` to learn more: [https://matplotlib.org/api/_as_gen/matplotlib.pyplot.plot.html#matplotlib.pyplot.plot](https://matplotlib.org/api/_as_gen/matplotlib.pyplot.plot.html#matplotlib.pyplot.plot) .
+
+# In[13]:
+
+
+plt.plot(years, apples, marker='s', c='b', ls='-', lw=2, ms=8, mew=2, mec='navy')
+plt.plot(years, oranges, marker='o', c='r', ls='--', lw=3, ms=10, alpha=.5)
+
+plt.xlabel('Year')
+plt.ylabel('Yield (tons per hectare)')
+
+plt.title("Crop Yields in Kanto")
+plt.legend(['Apples', 'Oranges']);
+
+
+# The `fmt` argument provides a shorthand for specifying the marker shape, line style, and line color. It can be provided as the third argument to `plt.plot`.
+# 
+# ```
+# fmt = '[marker][line][color]'
+# ```
+# 
+# 
+
+# In[14]:
+
+
+plt.plot(years, apples, 's-b')
+plt.plot(years, oranges, 'o--r')
+
+plt.xlabel('Year')
+plt.ylabel('Yield (tons per hectare)')
+
+plt.title("Crop Yields in Kanto")
+plt.legend(['Apples', 'Oranges']);
+
+
+# If you don't specify a line style in `fmt`, only markers are drawn.
+
+# In[15]:
+
+
+plt.plot(years, oranges, 'or')
+plt.title("Yield of Oranges (tons per hectare)");
+
+
+# ### Changing the Figure Size
+# 
+# You can use the `plt.figure` function to change the size of the figure.
+
+# In[16]:
+
+
+plt.figure(figsize=(12, 6))
+
+plt.plot(years, oranges, 'or')
+plt.title("Yield of Oranges (tons per hectare)");
+
+
+# ### Improving Default Styles using Seaborn
+# 
+# An easy way to make your charts look beautiful is to use some default styles from the Seaborn library. These can be applied globally using the `sns.set_style` function. You can see a full list of predefined styles here: https://seaborn.pydata.org/generated/seaborn.set_style.html .
+
+# In[17]:
+
+
+sns.set_style("whitegrid")
+
+
+# In[18]:
+
+
+plt.plot(years, apples, 's-b')
+plt.plot(years, oranges, 'o--r')
+
+plt.xlabel('Year')
+plt.ylabel('Yield (tons per hectare)')
+
+plt.title("Crop Yields in Kanto")
+plt.legend(['Apples', 'Oranges']);
+
+
+# In[19]:
+
+
+sns.set_style("darkgrid")
+
+
+# In[20]:
+
+
+plt.plot(years, apples, 's-b')
+plt.plot(years, oranges, 'o--r')
+
+plt.xlabel('Year')
+plt.ylabel('Yield (tons per hectare)')
+
+plt.title("Crop Yields in Kanto")
+plt.legend(['Apples', 'Oranges']);
+
+
+# In[21]:
+
+
+plt.plot(years, oranges, 'or')
+plt.title("Yield of Oranges (tons per hectare)");
+
+
+# You can also edit default styles directly by modifying the `matplotlib.rcParams` dictionary. Learn more: https://matplotlib.org/3.2.1/tutorials/introductory/customizing.html#matplotlib-rcparams .
+
+# In[22]:
+
+
+import matplotlib
+
+
+# In[23]:
+
+
+matplotlib.rcParams['font.size'] = 14
+matplotlib.rcParams['figure.figsize'] = (9, 5)
+matplotlib.rcParams['figure.facecolor'] = '#00000000'
+
+
+# ### Save and upload your notebook
+# 
+# Whether you're running this Jupyter notebook online or on your computer, it's essential to save your work from time to time. You can continue working on a saved notebook later or share it with friends and colleagues to let them execute your code. [Jovian](https://www.jovian.ai) offers an easy way of saving and sharing your Jupyter notebooks online.
+
+# In[24]:
+
+
+# Install the library 
+get_ipython().system('pip install jovian --upgrade --quiet')
+
+
+# In[25]:
+
+
+import jovian
+
+
+# In[26]:
+
+
+jovian.commit(project='python-matplotlib-data-visualization')
+
+
+# The first time you run `jovian.commit`, you'll be asked to provide an API Key to securely upload the notebook to your Jovian account. You can get the API key from your [Jovian profile page](https://jovian.ai) after logging in / signing up.
+# 
+# 
+# `jovian.commit` uploads the notebook to your Jovian account, captures the Python environment, and creates a shareable link for your notebook, as shown above. You can use this link to share your work and let anyone (including you) run your notebooks and reproduce your work.
+
+# ## Scatter Plot
+# 
+# In a scatter plot, the values of 2 variables are plotted as points on a 2-dimensional grid. Additionally, you can also use a third variable to determine the size or color of the points. Let's try out an example.
+# 
+# The [Iris flower dataset](https://en.wikipedia.org/wiki/Iris_flower_data_set) provides sample measurements of sepals and petals for three species of flowers. The Iris dataset is included with the Seaborn library and can be loaded as a Pandas data frame.
+
+# In[27]:
+
+
+# Load data into a Pandas dataframe
+flowers_df = sns.load_dataset("iris")
+
+
+# In[28]:
+
+
+flowers_df
+
+
+# In[29]:
+
+
+flowers_df.species.unique()
+
+
+# Let's try to visualize the relationship between sepal length and sepal width. Our first instinct might be to create a line chart using `plt.plot`.
+
+# In[30]:
+
+
+plt.plot(flowers_df.sepal_length, flowers_df.sepal_width);
+
+
+# The output is not very informative as there are too many combinations of the two properties within the dataset. There doesn't seem to be simple relationship between them.
+# 
+# We can use a scatter plot to visualize how sepal length & sepal width vary using the `scatterplot` function from the `seaborn` module (imported as `sns`).
+
+# In[83]:
+
+
+sns.scatterplot(x=flowers_df.sepal_length, y=flowers_df.sepal_width);
+
+
+# ### Adding Hues
+# 
+# Notice how the points in the above plot seem to form distinct clusters with some outliers. We can color the dots using the flower species as a `hue`. We can also make the points larger using the `s` argument.
+
+# In[84]:
+
+
+sns.scatterplot(x=flowers_df.sepal_length, y=flowers_df.sepal_width, hue=flowers_df.species, s=100);
+
+
+# Adding hues makes the plot more informative. We can immediately tell that Setosa flowers have a smaller sepal length but higher sepal widths. In contrast, the opposite is true for Virginica flowers. 
+
+# ### Customizing Seaborn Figures
+# 
+# Since Seaborn uses Matplotlib's plotting functions internally, we can use functions like `plt.figure` and `plt.title` to modify the figure.
+
+# In[85]:
+
+
+plt.figure(figsize=(12, 6))
+plt.title('Sepal Dimensions')
+
+sns.scatterplot(x=flowers_df.sepal_length, 
+                y=flowers_df.sepal_width, 
+                hue=flowers_df.species,
+                s=100);
+
+
+# ### Plotting using Pandas Data Frames
+# 
+# Seaborn has in-built support for Pandas data frames. Instead of passing each column as a series, you can provide column names and use the `data` argument to specify a data frame.
+
+# In[86]:
+
+
+plt.title('Sepal Dimensions')
+sns.scatterplot(x='sepal_length', 
+                y='sepal_width', 
+                hue='species',
+                s=100,
+                data=flowers_df);
+
+
+# Let's save and upload our work before continuing.
+
+# In[35]:
+
+
+import jovian
+
+
+# In[36]:
+
+
+jovian.commit()
+
+
+# ## Histogram
+# 
+# A histogram represents the distribution of a variable by creating bins (interval) along the range of values and showing vertical bars to indicate the number of observations in each bin. 
+# 
+# For example, let's visualize the distribution of values of sepal width in the flowers dataset. We can use the `plt.hist` function to create a histogram.
+
+# In[37]:
+
+
+# Load data into a Pandas dataframe
+flowers_df = sns.load_dataset("iris")
+
+
+# In[38]:
+
+
+flowers_df.sepal_width
+
+
+# In[39]:
+
+
+plt.title("Distribution of Sepal Width")
+plt.hist(flowers_df.sepal_width);
+
+
+# We can immediately see that the sepal widths lie in the range 2.0 - 4.5, and around 35 values are in the range 2.9 - 3.1, which seems to be the most populous bin.
+
+# ### Controlling the size and number of bins
+# 
+# We can control the number of bins or the size of each one using the bins argument.
+# 
+
+# In[40]:
+
+
+# Specifying the number of bins
+plt.hist(flowers_df.sepal_width, bins=5);
+
+
+# In[41]:
+
+
+import numpy as np
+
+# Specifying the boundaries of each bin
+plt.hist(flowers_df.sepal_width, bins=np.arange(2, 5, 0.25));
+
+
+# In[42]:
+
+
+# Bins of unequal sizes
+plt.hist(flowers_df.sepal_width, bins=[1, 3, 4, 4.5]);
+
+
+# ### Multiple Histograms
+# 
+# Similar to line charts, we can draw multiple histograms in a single chart. We can reduce each histogram's opacity  so that one histogram's bars don't hide the others'.
+# 
+# Let's draw separate histograms for each species of flowers.
+
+# In[43]:
+
+
+setosa_df = flowers_df[flowers_df.species == 'setosa']
+versicolor_df = flowers_df[flowers_df.species == 'versicolor']
+virginica_df = flowers_df[flowers_df.species == 'virginica']
+
+
+# In[44]:
+
+
+plt.hist(setosa_df.sepal_width, alpha=0.4, bins=np.arange(2, 5, 0.25));
+plt.hist(versicolor_df.sepal_width, alpha=0.4, bins=np.arange(2, 5, 0.25));
+
+
+# We can also stack multiple histograms on top of one another.
+
+# In[45]:
+
+
+plt.title('Distribution of Sepal Width')
+
+plt.hist([setosa_df.sepal_width, versicolor_df.sepal_width, virginica_df.sepal_width], 
+         bins=np.arange(2, 5, 0.25), 
+         stacked=True);
+
+plt.legend(['Setosa', 'Versicolor', 'Virginica']);
+
+
+# Let's save and commit our work before continuing
+
+# In[46]:
+
+
+import jovian
+
+
+# In[47]:
+
+
+jovian.commit()
+
+
+# ## Bar Chart
+# 
+# Bar charts are quite similar to line charts, i.e., they show a sequence of values. However, a bar is shown for each value, rather than points connected by lines. We can use the `plt.bar` function to draw a bar chart.
+
+# In[48]:
+
+
+years = range(2000, 2006)
+apples = [0.35, 0.6, 0.9, 0.8, 0.65, 0.8]
+oranges = [0.4, 0.8, 0.9, 0.7, 0.6, 0.8]
+
+
+# In[49]:
+
+
+plt.bar(years, oranges);
+
+
+# Like histograms, we can stack bars on top of one another. We use the `bottom` argument of `plt.bar` to achieve this.
+
+# In[50]:
+
+
+plt.bar(years, apples)
+plt.bar(years, oranges, bottom=apples);
+
+
+# ### Bar Plots with Averages
+# 
+# Let's look at another sample dataset included with Seaborn, called `tips`. The dataset contains information about the sex, time of day, total bill, and tip amount for customers visiting a restaurant over a week.
+
+# In[51]:
+
+
+tips_df = sns.load_dataset("tips");
+
+
+# In[52]:
+
+
+tips_df
+
+
+# We might want to draw a bar chart to visualize how the average bill amount varies across different days of the week. One way to do this would be to compute the day-wise averages and then use `plt.bar` (try it as an exercise).
+# 
+# However, since this is a very common use case, the Seaborn library provides a `barplot` function which can automatically compute averages.
+
+# In[56]:
+
+
+sns.barplot(x='day', y='total_bill', data=tips_df);
+
+
+# The lines cutting each bar represent the amount of variation in the values. For instance, it seems like the variation in the total bill is relatively high on Fridays and low on Saturday.
+# 
+# We can also specify a `hue` argument to compare bar plots side-by-side based on a third feature, e.g., sex.
+
+# In[57]:
+
+
+sns.barplot(x='day', y='total_bill', hue='sex', data=tips_df);
+
+
+# You can make the bars horizontal simply by switching the axes.
+
+# In[58]:
+
+
+sns.barplot(x='total_bill', y='day', hue='sex', data=tips_df);
+
+
+# Let's save and commit our work before continuing.
+
+# In[59]:
+
+
+import jovian
+
+
+# In[60]:
+
+
+jovian.commit()
+
+
+# ## Heatmap
+# 
+# A heatmap is used to visualize 2-dimensional data like a matrix or a table using colors. The best way to understand it is by looking at an example. We'll use another sample dataset from Seaborn, called `flights`, to visualize monthly passenger footfall at an airport over 12 years.
+
+# In[61]:
+
+
+flights_df = sns.load_dataset("flights").pivot("month", "year", "passengers")
+
+
+# In[62]:
+
+
+flights_df
+
+
+# `flights_df` is a matrix with one row for each month and one column for each year. The values show the number of passengers (in thousands) that visited the airport in a specific month of a year. We can use the `sns.heatmap` function to visualize the footfall at the airport.
+
+# In[63]:
+
+
+plt.title("No. of Passengers (1000s)")
+sns.heatmap(flights_df);
+
+
+# The brighter colors indicate a higher footfall at the airport. By looking at the graph, we can infer two things:
+# 
+# - The footfall at the airport in any given year tends to be the highest around July & August.
+# - The footfall at the airport in any given month tends to grow year by year.
+# 
+# We can also display the actual values in each block by specifying `annot=True` and using the `cmap` argument to change the color palette.
+
+# In[64]:
+
+
+plt.title("No. of Passengers (1000s)")
+sns.heatmap(flights_df, fmt="d", annot=True, cmap='Blues');
+
+
+
+
+# ## Images
+# 
+# We can also use Matplotlib to display images. Let's download an image from the internet.
+
+# In[67]:
+
+
+from urllib.request import urlretrieve
+
+
+# In[68]:
+
+
+urlretrieve('https://i.imgur.com/SkPbq.jpg', 'chart.jpg');
+
+
+# Before displaying an image, it has to be read into memory using the `PIL` module.
+
+# In[69]:
+
+
+from PIL import Image
+
+
+# In[70]:
+
+
+img = Image.open('chart.jpg')
+
+
+# An image loaded using PIL is simply a 3-dimensional numpy array containing pixel intensities for the red, green & blue (RGB) channels of the image. We can convert the image into an array using `np.array`.
+
+# In[71]:
+
+
+img_array = np.array(img)
+
+
+# In[72]:
+
+
+img_array.shape
+
+
+# We can display the PIL image using `plt.imshow`.
+
+# In[73]:
+
+
+plt.imshow(img);
+
+
+# We can turn off the axes & grid lines and show a title using the relevant functions.
+
+# In[74]:
+
+
+plt.grid(False)
+plt.title('A data science meme')
+plt.axis('off')
+plt.imshow(img);
+
+
+# To display a part of the image, we can simply select a slice from the numpy array.
+
+# In[75]:
+
+
+plt.grid(False)
+plt.axis('off')
+plt.imshow(img_array[125:325,105:305]);
+
+
+# ## Plotting multiple charts in a grid
+# 
+# Matplotlib and Seaborn also support plotting multiple charts in a grid, using `plt.subplots`, which returns a set of axes for plotting. 
+# 
+# Here's a single grid showing the different types of charts we've covered in this tutorial.
+
+# In[78]:
+
+
+fig, axes = plt.subplots(2, 3, figsize=(16, 8))
+
+# Use the axes for plotting
+axes[0,0].plot(years, apples, 's-b')
+axes[0,0].plot(years, oranges, 'o--r')
+axes[0,0].set_xlabel('Year')
+axes[0,0].set_ylabel('Yield (tons per hectare)')
+axes[0,0].legend(['Apples', 'Oranges']);
+axes[0,0].set_title('Crop Yields in Kanto')
+
+
+# Pass the axes into seaborn
+axes[0,1].set_title('Sepal Length vs. Sepal Width')
+sns.scatterplot(x=flowers_df.sepal_length, 
+                y=flowers_df.sepal_width, 
+                hue=flowers_df.species, 
+                s=100, 
+                ax=axes[0,1]);
+
+# Use the axes for plotting
+axes[0,2].set_title('Distribution of Sepal Width')
+axes[0,2].hist([setosa_df.sepal_width, versicolor_df.sepal_width, virginica_df.sepal_width], 
+         bins=np.arange(2, 5, 0.25), 
+         stacked=True);
+
+axes[0,2].legend(['Setosa', 'Versicolor', 'Virginica']);
+
+# Pass the axes into seaborn
+axes[1,0].set_title('Restaurant bills')
+sns.barplot(x='day', y='total_bill', hue='sex', data=tips_df, ax=axes[1,0]);
+
+# Pass the axes into seaborn
+axes[1,1].set_title('Flight traffic')
+sns.heatmap(flights_df, cmap='Blues', ax=axes[1,1]);
+
+# Plot an image using the axes
+axes[1,2].set_title('Data Science Meme')
+axes[1,2].imshow(img)
+axes[1,2].grid(False)
+axes[1,2].set_xticks([])
+axes[1,2].set_yticks([])
+
+plt.tight_layout(pad=2);
+
+
+# See this page for a full list of supported functions: https://matplotlib.org/3.3.1/api/axes_api.html#the-axes-class .
+
+# ### Pair plots with Seaborn
+# 
+# Seaborn also provides a helper function `sns.pairplot` to automatically plot several different charts for pairs of features within a dataframe.
+
+# In[79]:
+
+
+sns.pairplot(flowers_df, hue='species');
+
+
+# In[80]:
+
+
+sns.pairplot(tips_df, hue='sex');
+
+
+
+
+
+# ## Summary and Further Reading
+# 
+# We have covered the following topics in this tutorial: 
+# 
+# - Creating and customizing line charts using Matplotlib
+# - Visualizing relationships between two or more variables using scatter plots
+# - Studying distributions of variables using histograms & bar charts to 
+# - Visualizing two-dimensional data using heatmaps
+# - Displaying images using Matplotlib's `plt.imshow`
+# - Plotting multiple Matplotlib and Seaborn charts in a grid
+# 
+# In this tutorial we've covered some of the fundamental concepts and popular techniques for data visualization using Matplotlib and Seaborn. Data visualization is a vast field and we've barely scratched the surface here. Check out these references to learn and discover more:
+# 
+# * Data Visualization cheat sheet: https://jovian.ml/aakashns/dataviz-cheatsheet
+# * Seaborn gallery: https://seaborn.pydata.org/examples/index.html
+# * Matplotlib gallery: https://matplotlib.org/3.1.1/gallery/index.html
+# * Matplotlib tutorial: https://github.com/rougier/matplotlib-tutorial
+
+
+
+
